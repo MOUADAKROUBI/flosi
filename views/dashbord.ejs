@@ -1,0 +1,101 @@
+<div class="container">
+  <%- include("./partails/header.ejs") %>
+    <% if (accessmsg !='' ) {%>
+      <div class="alert alert-warning alert-dismissible fade show mt-2" role="alert">
+        <%= accessmsg %>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+      <% } %>
+        <% if (deleteRoomMsg !='' ) {%>
+          <div class="alert alert-warning alert-dismissible fade show mt-2" role="alert">
+            <%= deleteRoomMsg %>
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+          <% } %>
+            <div class="row align-items-center mt-5">
+              <div class="col2">
+                <div class="box-log-in bg-white p-4 shadow border border-2 rounded">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header mb-4 border-bottom">
+                        <div class="sign-in-header text-center">
+                          <h5 class="modal-title mb-3">invet friends</h5>
+                        </div>
+                      </div>
+                      <div class="modal-body mb-4 border-bottom pb-3">
+                        <form action="/invet" method="post">
+                          <div class="d-flex">
+                            <div class="form-floating me-2 w-75">
+                              <input type="text" name="invetFriend" class="form-control" id="floatingInput"
+                                placeholder="invet friends">
+                              <label for="floatingInput">invet friends</label>
+                            </div>
+                            <button class="btn btn-light" type="submit">invet</button>
+                          </div>
+                        </form>
+                        <% if (notifactionInvet !='' ) {%>
+                          <div class="alert alert-warning alert-dismissible fade show mt-2" role="alert">
+                            <%= notifactionInvet %>
+                              <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                aria-label="Close"></button>
+                          </div>
+                          <% } %>
+                            <% if (friendsList.length) { %>
+                              <ul class="nav flex-column mt-2">
+                                <% friendsList.forEach( friend=> { %>
+                                  <li class="nav-item fs-5 fw-2 text-muted"><i class="fa fa-check color-light me-2"></i>
+                                    <%= friend %>
+                                  </li>
+                                  <% }); %>
+                              </ul>
+                              <% } %>
+                      </div>
+                      <div class="modal-footre">
+                        <div class="d-grid w-100">
+                          <a href="/createRoomName" class="btn btn-primary createRoomName-btn"><i
+                              class="fa fa-plus me-2"></i>Create Room Name</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col2 text-center fs-2 fw-bold text-muted">or</div>
+              <div class="col2">
+                <div class="box-log-in bg-white p-4 text-center shadow border border-2 rounded">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header mb-4 border-bottom text-center">
+                        <div class="sign-in-header">
+                          <h5 class="modal-title mb-3">join in room</h5>
+                        </div>
+                      </div>
+                      <form action="/joinRoom" method="post">
+                        <div class="modal-body mb-4 border-bottom pb-3">
+                          <div class="form-floating mb-3">
+                            <input type="text" name="codeRoom" class="form-control" id="floatingInput"
+                              placeholder="room name">
+                            <label for="floatingInput">code room</label>
+                          </div>
+                        </div>
+                        <% if (joinNotification !='' ) {%>
+                          <div class="alert alert-warning alert-dismissible fade show mt-2" role="alert">
+                            <%= joinNotification %>
+                              <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                aria-label="Close"></button>
+                          </div>
+                          <% } %>
+                            <div class="modal-footre">
+                              <div class="d-grid w-100">
+                                <button type="submit" class="btn btn-primary"><i class="fa fa-user-plus me-2"></i>join
+                                  in Room</button>
+                              </div>
+                            </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        <%- include("./partails/footre.ejs") %>

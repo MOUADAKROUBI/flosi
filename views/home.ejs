@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en" version="5.0.0">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+  <link rel="stylesheet" href="/public/home.css">
+  <script src="https://kit.fontawesome.com/ccc2850fdc.js" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.6.1.js"
+      integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
+  <link rel="shortcut icon" href="/image/icon_flosi.png" type="image/x-icon">
+  <title>
+      <%= title %> 
+  </title>
+</head>
+<noscript>
+    <h1>javascript is not allowed in your browser</h1>
+</noscript>
+
+<body class="">
+  <div class="container home m-auto mb-5">
+    <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+        <symbol id="check-circle-fill" viewBox="0 0 16 16">
+          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+        </symbol>
+        <symbol id="info-fill" viewBox="0 0 16 16">
+          <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+        </symbol>
+        <symbol id="exclamation-triangle-fill" viewBox="0 0 16 16">
+          <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+        </symbol>
+    </svg>
+    <% if (emsg.length != 0) {%> 
+        <% emsg.forEach( error => { %> 
+            <div class="alert alert-warning alert-dismissible fade show bg-danger text-white" role="alert">
+                <%= error.msg %> 
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        <% }) %> 
+    <% } %> 
+    <div class="row align-items-center">
+      <div class="col pt-5">
+          <h1 class="display-1 fw-bold text-black-50">flosi</h1>
+          <h2 class="descreption">flosi is a website that is help you to management and calculate your financial things with your freinds</h2>
+      </div>
+      <div class="col">
+          <div class="box-log-in bg-white p-4 text-center shadow border border-2 rounded">
+              <% if(logInmsg != '') {%> 
+                  <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                      <%= logInmsg %> 
+                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+              <% } %> 
+              <% if(newPassNoti != '') {%> 
+                  <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                      <%= newPassNoti %> 
+                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+              <% } %> 
+              <div class="modal-dialog">
+                  <div class="modal-content">
+                      <div class="modal-header mb-4 border-bottom justify-content-center">
+                          <div class="sign-in-header">
+                              <h5 class="modal-title mb-3">log in to flosi</h5>
+                          </div>
+                      </div>
+                      <div class="modal-body mb-4 border-bottom pb-3">
+                          <form action="/logIn" method="post">
+                              <div class="form-floating mb-3">
+                                  <input type="email" name="emailenterd" class="form-control" id="floatingInput"
+                                      placeholder="name@example.com" autofocus>
+                                  <label for="floatingInput">Email address</label>
+                              </div>
+                              <div class="form-floating mb-3">
+                                  <input type="password" name="passwordentred" class="form-control" id="floatingPassword"
+                                      placeholder="Password">
+                                  <label for="floatingPassword">Password</label>
+                              </div>
+                              <div class="d-grid w-100">
+                                  <button type="submit" class="btn btn-primary"><i class="fa fa-sign-in me-2"></i>log in</button>
+                              </div>
+                              <a href="/forgetPassword" class="text-secondary">Forgotten password?</a>
+                          </form>
+                      </div>
+                      <div class="modal-footer">
+                          <div class="btn-log-in w-100">
+                              <button class="btn btn-success new-account-button" data-bs-toggle="modal"
+                                  data-bs-target="#sign-in"><i class="fa fa-sign-in me-2"></i>Create new account</button>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+      </div>
+      <div class="modal fade" id="sign-in" tabindex="-1" aria-labelledby="signInModalLabel" aria-hidden="true">
+          <form action="/signIn" method="post" class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <div class="sign-in-header">
+                          <h5 class="modal-title">sign in to flosi</h5>
+                          <p class="text-muted">It's quick and easy.</p>
+                      </div>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                      <div class="form-floating mb-3">
+                          <input type="text" name="username" class="form-control" id="username" placeholder="ex: mouad">
+                          <label for="floatingInput">username</label>
+                      </div>
+                      <p class="text-danger hide">your username must be great than 5 caracters</p>
+
+                      <div class="form-floating mb-3">
+                          <input type="email" name="email" class="form-control" id="email"
+                              placeholder="name@example.com">
+                          <label for="floatingInput">Email address</label>
+                      </div>
+                      <p class="text-danger hide">your email is not valid</p>
+
+                      <div class="form-floating mb-3">
+                          <input type="password" name="password" class="form-control" id="password"
+                              placeholder="Password">
+                          <label for="floatingPassword">Password</label>
+                      </div>
+                      <p class="text-danger hide">your password must be contain a lowercase and uppercase letters and digits and specifice symbol</p>
+                  </div>
+                  <div class="modal-footer">
+                      <div class="d-grid w-100">
+                          <button type="submit" class="btn btn-success btn-singUp"><i class="fa fa-sign-in me-2"></i>sign Up</button>
+                      </div>
+                  </div>
+              </div>
+          </form>
+      </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+      crossorigin="anonymous"></script>
+  <script src="../public/home.js"></script>
+</body>
+</html>

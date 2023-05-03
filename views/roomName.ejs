@@ -1,0 +1,33 @@
+<div class="container">
+  <%- include("./partails/header.ejs") %>
+    <div class="box-room-name bg-white p-4 shadow border border-2 rounded mt-5">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header mb-4 border-bottom">
+            <div class="sign-in-header text-center w-100 d-flex">
+              <form action="/goBack" method="post">
+                <button type="submit" class="btn btn-light rounded-pill me-2 h-75"><i
+                    class="fa fa-arrow-left"></i></button>
+              </form>
+              <h5 class="modal-title mb-3">room name</h5>
+            </div>
+          </div>
+          <form action="/roomName" method="post">
+            <div class="modal-body mb-4 border-bottom pb-3">
+              <div class="form-floating">
+                <input type="text" name="roomName" class="form-control" id="floatingInput"
+                  placeholder="invet friends">
+                <label for="floatingInput">room Name</label>
+              </div>
+            </div>
+            <div class="modal-footre">
+              <div class="d-grid w-100">
+                <button type="submit" class="btn btn-primary"><i class="fa fa-plus me-2"></i>Create Room</button>
+              </div>
+            </div>
+        </div>
+        </form>
+      </div>
+    </div>
+    <%- include("./partails/footre.ejs") %>
+</div>

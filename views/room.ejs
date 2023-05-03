@@ -1,0 +1,143 @@
+<div class="container justify-centent-center w-100">
+  <%- include('./partails/header.ejs') %> 
+    <% if (createNotification != '') {%>
+        <div class="alert alert-warning alert-dismissible fade show w-75" role="alert">
+            <%= createNotification %>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    <% } %>
+    <% if (add_purchase != '') {%>
+        <div class="alert alert-warning alert-dismissible fade show w-75" role="alert">
+            <%= add_purchase %>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    <% } %>
+    <% if (deleteAllMsg != '') {%>
+        <div class="alert alert-warning alert-dismissible fade show w-75" role="alert">
+            <%= deleteAllMsg %>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    <% } %>
+    <% if (addFriendmsg != '') {%>
+        <div class="alert alert-warning alert-dismissible fade show w-75" role="alert">
+            <%= addFriendmsg %>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    <% } %>
+</div>
+<div class="container mt-5 bg-white rounded-2 box shadow">
+        <div class="table-responsive pt-3 pb-3">
+            <form action="/room/<%= id %>/add_purchase" method="post">
+                <table class="table text-center">
+                    <thead class="">
+                        <tr>
+                            <th scope="col">achete</th>
+                            <th scope="col">price(reyal)</th>
+                            <% friendsList.forEach(friend => { %>
+                                <th scope="col"><%= friend.name_inveted %></th>
+                            <% }); %>
+                            <th>ckeck all</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="mb-3">
+                                <input type="text" name="nameOfProduct" id="nameOfProduct" class="form-control" required>
+                            </td>
+                            <td class="mb-3">
+                                <input type="number" name="price" id="price" class="form-control" required>
+                            </td>
+                            <% let cpt = 0 %>
+                            <% friendsList.forEach(friend => { %>
+                                <td class="mb-3">
+                                    <input type="checkbox" name="friendCkeck" value= "<%= friend.name_inveted %>" id="<%= friend.name_inveted.replace(/\s+/g, "_") %>" class="form-check-input">
+                                </td>
+                            <% }); %>
+                            <td class="mb-3">
+                                <button type="button" class="btn btn-outline-secondary ckeck-all">check all</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="container">
+                    <button type="submit" class="add-row btn btn-secondary">add</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="container mt-5 bg-white rounded-2 box shadow div-output">
+        <div class="table-responsive">
+            <table class="table table-hover text-center">
+                <thead class="">
+                    <tr>
+                        <th>id</th>
+                        <th>name of product</th>
+                        <th>price(reyal)</th>
+                        <% friendsList.forEach(friend => { %>
+                            <th><%= friend.name_inveted %></th>
+                        <% }); %>
+                        <th>total/nmbTotal</th>
+                        <th>modifay/delete</th>
+                    </tr>
+                </thead>
+                <!-- update this in script.js -->
+                <tbody class="output">
+                    <% if (purchases.length != 0) {%>
+                        <% purchases.forEach(purchase => { %>
+                            <tr data-row = <%= purchase._id %>>
+                                <td id="id"><%= purchases.indexOf(purchase) + 1 %></td>
+                                <td id="output-nameOfProduct"><%= purchase.nameOfProduct %></td>
+                                <td id="output-price"><%= purchase.price %></td>
+                                <% purchase.ckeckFriends.forEach((ckeckFriend) => { %>
+                                    <td id="output-price"><%= ckeckFriend.Consumption %></td>    
+                                <% }) %>
+                                <% let cpt = 0 %>
+                                <% purchase.ckeckFriends.forEach((ckeckFriend) => { %>
+                                       <% if (ckeckFriend.Consumption == 1) {%>
+                                            <% cpt++ %>
+                                        <% } %>
+                                <% }) %>
+                                <td id="total-price-<%= purchase._id %>"><%= Math.floor(purchase.price / cpt) %></td>
+                                <td class="mb-3">
+                                    <button type="button" class="modifay btn btn-success"><i class="fa fa-pencil-square-o modifay"></i></button>
+                                    <button type="button" class="delete btn btn-danger"><i class="fa fa-trash-o delete"></i></button>
+                                </td>
+                            </tr>
+                        <% }); %>
+                    <% } %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="container mt-5 bg-white rounded-2 box shadow">
+        <div class="table-responsive">
+            <table class="table text-center">
+                <thead class="">
+                    <tr>
+                        <th></th>
+                        <% friendsList.forEach(friend => { %>
+                          <% if (friend.name_inveted != username) { %>
+                            <th><%= friend.name_inveted %></th>
+                          <% } %>
+                        <% }); %>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>price total(reyal)</th>
+                        <% friendsList.forEach(friend => { %>
+                          <% if (friend.name_inveted != username) { %>
+                            <th id="<%= friend.name_inveted.replace(/\s+/g, "_") %>Price"></th>
+                          <% } %>
+                        <% }); %>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="container m-3 btn-clear-calcul">
+        <button type="button" class="calcul btn btn-success">calcul</button>
+        <button type="button" class="clear-all btn btn-danger">clear all</button>
+    </div>
+    <script src="/script.js"></script>
+<%- include('./partails/footre.ejs') %> 
