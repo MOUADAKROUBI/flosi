@@ -3,11 +3,10 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
-const {connection} = require('./database/MySQLDataBase');
 const routeDefault = require('./routes/defaultRoute');
-const routeDashbord = require('./routes/dashbordRoute');
+const routedashboard = require('./routes/dashboardRoute');
 const routeRoom = require('./routes/roomRouter');
-const { port, mongodb_password } = require('./config/config')
+const { port, mongodb_url } = require('./config/config')
 const MongoDBStore = require('connect-mongodb-session')(session);
 const crypto = require('crypto');
 const app = express();
@@ -20,9 +19,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser('keyboard cat'));
 app.use(session({
-    secret:'secret',
-    saveUninitialized: true,    
-    resave: true
+  secret: 'secret',
+  saveUninitialized: true,
+  resave: true
 }));
 app.use(require('connect-flash')());
 app.use(function (req, res, next) {
@@ -32,7 +31,7 @@ app.use(function (req, res, next) {
 
 
 const store = new MongoDBStore({
-  uri: mongodb_password,
+  uri: mongodb_url,
   collection: 'sessions',
   connectionOptions: {
     useNewUrlParser: true,
@@ -53,7 +52,7 @@ const sessionMiddleware = session({
 
 app.use(sessionMiddleware);
 
-app.get('/', (req,res) => {
+app.get('/', (req, res) => {
   if (req.session.views) {
     req.session.views++;
   } else {
@@ -64,12 +63,10 @@ app.get('/', (req,res) => {
 })
 
 app.use(routeDefault);
-app.use(routeDashbord);
+app.use(routedashboard);
 app.use(routeRoom);
 
-app.listen(5000 || port, () => {
-    connection.connect((err) => {
-        if (err) throw err;
-        console.log(`the server is running in http://localhost:5000`);
-    });
+const PORT = port || 5000;
+app.listen(PORT, () => {
+  console.log(`The server is running at http://localhost:${PORT}`);
 });

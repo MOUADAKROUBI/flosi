@@ -18,6 +18,16 @@ const flosi_signIn_post = (req,res) => {
                 console.error(err);
                 return;
             } else {
+                connection.query('SELECT * FROM users WHERE email = ?;', [email], (err, results) => {
+                    if (err) throw err;
+                    console.log(results);
+                    if (results.length > 0) {
+                        req.flash('errorSignIn', 'your email is already exists');
+                        res.redirect('/home');
+                        return;
+                    }
+                })
+
                 const sql = 'INSERT INTO users (username, email, password) VALUES (?, ?, ?);';
                 const data = [username, email, hash];
                 connection.query(sql, data, (err) => {
@@ -28,7 +38,7 @@ const flosi_signIn_post = (req,res) => {
                             return;
                         } else {
                             localstorage.setItem('signing_token', token);
-                            res.redirect('/dashbord');
+                            res.redirect('/dashboard');
                             return;
                         }
                     })
@@ -55,7 +65,7 @@ const flosi_logIn_post = (req,res) => {
                   return;
               } else {
                   localstorage.setItem('signing_token', token);
-                  res.redirect('/dashbord');
+                  res.redirect('/dashboard');
                   return;
               }
             })

@@ -20,13 +20,13 @@ const flosi_invet_post = (req,res) => {
                     req.flash('friendsList', friends)
                 }
                 cpt++;
-                res.redirect('/dashbord');
+                res.redirect('/dashboard');
                 return;
             }
         })
         if (cpt == 0) {
             req.flash('notifactionInvet', 'this user is not signing yet');
-            res.redirect('/dashbord')
+            res.redirect('/dashboard')
         }
     })
 }
@@ -46,7 +46,7 @@ const flosi_createRoomName_get = (req,res) => {
         })
     } else {
         req.flash('notifactionInvet', 'please invet your friends')
-        res.redirect('/dashbord')
+        res.redirect('/dashboard')
     }
 }
 
@@ -68,7 +68,7 @@ const flosi_joinRoom_post = (req,res) => {
         if (err) throw err;
         if (!results.length) {
             req.flash('joinNotification', 'this room is not exict yet')
-            res.redirect('/dashbord');
+            res.redirect('/dashboard');
         } else {
             jwt.verify(localstorage.getItem('signing_token'), secret_token, (err, user) => {
                 if (err) {

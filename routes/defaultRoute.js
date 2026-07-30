@@ -14,34 +14,57 @@ router.get('/', (req,res) => {
     res.redirect('/home');
 })
 
-connection.query('SELECT * FROM users;', (err, results) => {
-    if (err) throw err;
-    router.get('/home', (req, res) => {
-        if (localstorage.getItem('signing_token')) {
-            jwt.verify(localstorage.getItem('signing_token'), secret_token, (err, user) => {
-                if (err) {
-                    console.log(`this is an error in verifay token`);
-                    return;
-                } else {
+router.get('/home', (req, res) => {
+    if (localstorage.getItem('signing_token')) {
+        jwt.verify(localstorage.getItem('signing_token'), secret_token, (err, user) => {
+            if (err) {
+                console.log(`this is an error in verifay token`);
+                return res.render('home', {
+                    title: 'flosi || log in or sign in',
+                    emsg: req.flash('errors_msg'),
+                    logInmsg: req.flash('errorLogin'),
+                    newPassNoti: req.flash('newPassNotifacation')
+                });
+            } else {
+                connection.query('SELECT * FROM users;', (err, results) => {
+                    if (err) {
+                        console.error(err);
+                        return res.render('home', {
+                            title: 'flosi || log in or sign in',
+                            emsg: req.flash('errors_msg'),
+                            logInmsg: req.flash('errorLogin'),
+                            newPassNoti: req.flash('newPassNotifacation')
+                        });
+                    }
+                    let matched = false;
                     results.forEach(result => {
                         if (result.email == user["email"] && result.password == user["password"]) {
-                            res.redirect('/dashbord')
-                            return;
+                            matched = true;
                         }   
-                    })
-                } 
-            });
-        }
-        else {
-            res.render('home', {
-                title: 'flosi || log in or sign in',
-                emsg: req.flash('errors_msg'),
-                logInmsg: req.flash('errorLogin'),
-                newPassNoti: req.flash('newPassNotifacation')
-            });
-        }
-    });
-})
+                    });
+                    if (matched) {
+                        return res.redirect('/dashboard');
+                    } else {
+                        return res.render('home', {
+                            title: 'flosi || log in or sign in',
+                            emsg: req.flash('errors_msg'),
+                            logInmsg: req.flash('errorLogin'),
+                            newPassNoti: req.flash('newPassNotifacation')
+                        });
+                    }
+                });
+            } 
+        });
+    }
+    else {
+        res.render('home', {
+            title: 'flosi || log in or sign in',
+            emsg: req.flash('errors_msg'),
+            logInmsg: req.flash('errorLogin'),
+            newPassNoti: req.flash('newPassNotifacation')
+        });
+    }
+});
 
 let regexp = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#\$%&]).+$/;
 router.post('/signIn',defaultControlls.flosi_signIn_post);

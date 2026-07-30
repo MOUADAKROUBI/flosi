@@ -1,8 +1,8 @@
 <div class="container">
   <%- include("./partails/header.ejs") %>
-    <% if (accessmsg !='' ) {%>
+    <% if (createNotification !='' ) {%>
       <div class="alert alert-warning alert-dismissible fade show mt-2" role="alert">
-        <%= accessmsg %>
+        <%= createNotification %>
           <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
       </div>
       <% } %>
@@ -97,5 +97,5 @@
                 </div>
               </div>
             </div>
-          </div>
-        <%- include("./partails/footre.ejs") %>
+</div>
+<%- include("./partails/footre.ejs") %>

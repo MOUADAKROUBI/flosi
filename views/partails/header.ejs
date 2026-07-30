@@ -35,95 +35,95 @@
       <!--  -->
       <% if(!title.includes("foreign")) { %>
         <ul class="nav align-items-center">
-            <li class="nav-item me-3 fs-5">
-              Welcomme, <span class="fs-5 fw-bold text-capitalize">
-                <%= username %>
+          <li class="nav-item me-3 fs-5">
+            Welcome, <span class="fs-5 fw-bold text-capitalize">
+              <%= username %>
+            </span>
+          </li>
+          <li class="nav-item me-3">
+            <button class="btn btn-ligth position-relative btn-notification">
+              <i class="fa fa-bell fs-2"></i>
+              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger fs-6">
+                0
+                <span class="visually-hidden">unread messages</span>
               </span>
-            </li>
-            <li class="nav-item me-3">
-              <button class="btn btn-ligth position-relative btn-notification">
-                <i class="fa fa-bell fs-2"></i>
-                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger fs-6">
-                  0
-                  <span class="visually-hidden">unread messages</span>
-                </span>
-              </button>
-            </li>
-            <li class="nav-item">
-              <% if (title.includes("room")) {%>
-                <button class="btn btn-light rounded-pill chevron-down-btn"><i
-                    class="fa fa-chevron-circle-down"></i></button>
-                <% } else {%>
-                  <form action="/signOut" method="post">
-                    <button class="btn btn-outline-danger fs-6" type="submit"><i class="fa fa-sign-out me-2"></i>sign
-                      out</button>
-                  </form>
-                  <% } %>
-            </li>
-          </ul>
-          <% if (title.includes("room")) { %>
-            <div class="setting-box bg-light shadow rounded p-2">
-              <ul class="nav flex-column">
-                <% if (isAdmin) {%>
-                  <li class="nav-item mb-2 d-grid">
-                    <button class="btn btn-light text-capitalize" data-bs-toggle="modal" data-bs-target="#add-friends">add
-                      friend</button>
+            </button>
+          </li>
+          <li class="nav-item">
+            <% if (title.includes("room")) {%>
+              <button class="btn btn-light rounded-pill chevron-down-btn"><i
+                  class="fa fa-chevron-circle-down"></i></button>
+              <% } else {%>
+                <form action="/signOut" method="post">
+                  <button class="btn btn-outline-danger fs-6" type="submit"><i class="fa fa-sign-out me-2"></i>sign
+                    out</button>
+                </form>
+                <% } %>
+          </li>
+        </ul>
+        <% if (title.includes("room")) { %>
+          <div class="setting-box bg-light shadow rounded p-2">
+            <ul class="nav flex-column">
+              <% if (isAdmin) {%>
+                <li class="nav-item mb-2 d-grid">
+                  <button class="btn btn-light text-capitalize" data-bs-toggle="modal" data-bs-target="#add-friends">add
+                    friend</button>
+                </li>
+                <li class="nav-item mb-2 d-grid">
+                  <button class="btn btn-light text-capitalize" data-bs-toggle="modal"
+                    data-bs-target="#delete-friends">delete friend</button>
+                </li>
+                <% } %>
+                  <li class="nav-item mb-2">
+                    <form action="/room/:id/createJoin_another_room" method="post" class="d-grid">
+                      <button class="btn btn-light text-capitalize">create/join another room</button>
+                    </form>
                   </li>
-                  <li class="nav-item mb-2 d-grid">
-                    <button class="btn btn-light text-capitalize" data-bs-toggle="modal"
-                      data-bs-target="#delete-friends">delete friend</button>
-                  </li>
-                  <% } %>
+                  <% if (isAdmin && title.includes("room")) { %>
                     <li class="nav-item mb-2">
-                      <form action="/room/:id/createJoin_another_room" method="post" class="d-grid">
-                        <button class="btn btn-light text-capitalize">create/join another room</button>
+                      <form action="/room/<%=id %>/deleteRoom" method="post" class="d-grid">
+                        <button class="btn btn-light text-capitalize">delete room</button>
                       </form>
                     </li>
-                    <% if (isAdmin && title.includes("room")) { %>
+                    <% } %>
                       <li class="nav-item mb-2">
-                        <form action="/room/<%= id %>/deleteRoom" method="post" class="d-grid">
-                          <button class="btn btn-light text-capitalize">delete room</button>
+                        <form action="/signOut" method="post" class="d-grid">
+                          <button class="btn btn-outline-danger fs-6 text-capitalize" type="submit"><i
+                              class="fa fa-sign-out me-2"></i>sign out</button>
                         </form>
                       </li>
-                      <% } %>
-                        <li class="nav-item mb-2">
-                          <form action="/signOut" method="post" class="d-grid">
-                            <button class="btn btn-outline-danger fs-6 text-capitalize" type="submit"><i
-                                class="fa fa-sign-out me-2"></i>sign out</button>
-                          </form>
-                        </li>
-              </ul>
-            </div>
-          <% } %>
-          <div class="notification-box bg-light shadow rounded p-2">
-            <h2 class="text-dark text-capitalize">notification</h2>
-            <ul class="nav flex-column w-100">
-              <li></li>
             </ul>
           </div>
-        <% }else { %>
-          <form action="/logIn" method="post">
-            <ul class="nav align-items-center justify-content-center">
-                <li class="nav-item">
+          <% } %>
+            <div class="notification-box bg-light shadow rounded p-2">
+              <h2 class="text-dark text-capitalize">notification</h2>
+              <ul class="nav flex-column w-100">
+                <li></li>
+              </ul>
+            </div>
+            <% }else { %>
+              <form action="/logIn" method="post">
+                <ul class="nav align-items-center justify-content-center">
+                  <li class="nav-item">
                     <div class="form-floating me-3">
-                        <input type="email" name="emailenterd" class="form-control" id="floatingInput"
-                            placeholder="name@example.com" required>
-                        <label for="floatingInput">Email address</label>
+                      <input type="email" name="emailenterd" class="form-control" id="floatingInput"
+                        placeholder="name@example.com" required>
+                      <label for="floatingInput">Email address</label>
                     </div>
-                </li>
-                <li class="nav-item">
+                  </li>
+                  <li class="nav-item">
                     <div class="form-floating me-3">
-                        <input type="password" name="passwordentred" class="form-control" id="floatingPassword"
-                            placeholder="Password" required>
-                        <label for="floatingPassword">Password</label>
+                      <input type="password" name="passwordentred" class="form-control" id="floatingPassword"
+                        placeholder="Password" required>
+                      <label for="floatingPassword">Password</label>
                     </div>
-                </li>
-                <li class="nav-item  d-grid">
+                  </li>
+                  <li class="nav-item  d-grid">
                     <button type="submit" class="btn btn-primary btn-log">log in</button>
-                </li>
-            </ul>
-          </form>
-        <% } %>
+                  </li>
+                </ul>
+              </form>
+              <% } %>
     </div>
     <!--  -->
   </header>
